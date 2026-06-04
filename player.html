@@ -111,8 +111,8 @@
         
     <div id="area-ai-konseling" style="position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; gap: 10px; width: 60%; max-width: 600px;">
             <input type="text" id="input-curhat" placeholder="💬 Tulis keluh kesahmu atau tanya topik Alkitab di sini..." style="flex: 1; padding: 12px; background: rgba(0,0,0,0.8); border: 1px solid #ffcc00; color: #fff; font-size: 14px; border-radius: 4px;">
-            <button id="btn-mik" onclick="pendetaDengarCurhat()" style="background: #ffcc00; color: #000; border: none; font-weight: bold;">🎙️ REKOR SUARA</button>
-            <button onclick="kirimCurhatTeks()" style="background: #00ffcc; color: #000; border: none; font-weight: bold;">KIRIM 🚀</button>
+            <button id="btn-mik" onclick="pendetaDengarCurhat()" style="background: #ffcc00; color: #000; border: none; font-weight: bold;">🎙️SUARA</button>
+            <button onclick="kirimCurhatTeks()" style="background: #00ffcc; color: #000; border: none; font-weight: bold;">Teks🚀</button>
         </div>
 
         <div id="kontrol">
@@ -346,7 +346,7 @@
             let keluhanUser = document.getElementById('input-curhat').value.trim();
             if(!keluhanUser) return;
 
-            document.getElementById('sub-tsi').innerText = "📜 Pendeta sedang merenungkan jalan keluar untukmu...";
+            document.getElementById('sub-tsi').innerText = "📜 Pastor sedang merenungkan jalan keluar untukmu...";
             document.getElementById('sub-kjv').innerText = "Please wait, counseling session in progress...";
             document.getElementById('sub-orig').innerText = "— MENYELARASKAN AYAT MANIFEST —";
 
@@ -382,7 +382,7 @@
                 // Tampilkan Jawaban di Layar Takarir
                 document.getElementById('sub-tsi').innerText = jawabanPendetaAI;
                 document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
-                document.getElementById('sub-orig').innerText = "🎙️ PENDETA DIGITAL SEDANG BERBICARA";
+                document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
                 document.getElementById('input-curhat').value = ""; // Bersihkan kolom
 
                 // 🎶 ENGINE MULUT AI (TTS NATIVE): Mengucapkan Jawaban dalam Bahasa Pengguna
