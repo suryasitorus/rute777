@@ -258,6 +258,41 @@
                 mainkanScene(currentSceneIndex - 1);
             }
         }
+    // 🖥️ ENGINE PROJEKTOR BIOSKOP FULLSCREEN (NATIVE HTML5)
+        function toggleFullScreen() {
+            // Kita minta seluruh area 'body' website untuk masuk ke mode layar penuh
+            let element = document.documentElement; 
+
+            if (!document.fullscreenElement && 
+                !document.mozFullScreenElement && 
+                !document.webkitFullscreenElement && 
+                !document.msFullscreenElement) {
+                
+                // Perintah masuk mode Bioskop Fullscreen (Mendukung semua jenis browser)
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+                console.log("🖥️ MODE BIOSKOP AKTIF: Layar penuh tanpa batas jendela.");
+            } else {
+                // Perintah keluar dari mode Bioskop (Kembali ke mode web biasa)
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+                console.log("🖥️ MODE BIOSKOP NON-AKTIF: Kembali ke mode jendela.");
+            }
+        }
     </script>
 </body>
 </html>
