@@ -109,6 +109,12 @@
         <img id="canvas-visual" src="" alt="Cinematic Visual" onload="this.style.opacity=1">
         <audio id="player-audio" loop></audio>
         
+    <div id="area-ai-konseling" style="position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; gap: 10px; width: 60%; max-width: 600px;">
+            <input type="text" id="input-curhat" placeholder="💬 Tulis keluh kesahmu atau tanya topik Alkitab di sini..." style="flex: 1; padding: 12px; background: rgba(0,0,0,0.8); border: 1px solid #ffcc00; color: #fff; font-size: 14px; border-radius: 4px;">
+            <button id="btn-mik" onclick="pendetaDengarCurhat()" style="background: #ffcc00; color: #000; border: none; font-weight: bold;">🎙️ REKOR SUARA</button>
+            <button onclick="kirimCurhatTeks()" style="background: #00ffcc; color: #000; border: none; font-weight: bold;">KIRIM 🚀</button>
+        </div>
+
         <div id="kontrol">
             <button onclick="sceneSebelumnya()">⏮️ BACK</button>
             <button onclick="toggleFullScreen()">🖥️ FULLSCREEN</button>
@@ -293,6 +299,109 @@
                 console.log("🖥️ MODE BIOSKOP NON-AKTIF: Kembali ke mode jendela.");
             }
         }
+    
+    // 🎙️ ENGINE TELINGA AI MULTI-BAHASA (STT NATIVE)
+        let recognition;
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'id-ID'; // Otomatis mengenali input Bahasa Indonesia secara gratis
+
+            recognition.onstart = function() {
+                document.getElementById('btn-mik').innerText = "🛑 MENDENGARKAN...";
+                document.getElementById('btn-mik').style.background = "#ff3333";
+                // Auto-ducking: Kecilkan volume musik teater agar suara user terdengar jernih
+                document.getElementById('player-audio').volume = 0.1;
+            };
+
+            recognition.onresult = function(event) {
+                let hasilSuaraTeks = event.results[0][0].transcript;
+                document.getElementById('input-curhat').value = hasilSuaraTeks;
+                console.log("🎙️ STT TEMUAN TEKS: " + hasilSuaraTeks);
+            };
+
+            recognition.onend = function() {
+                document.getElementById('btn-mik').innerText = "🎙️ REKOR SUARA";
+                document.getElementById('btn-mik').style.background = "#ffcc00";
+                document.getElementById('player-audio').volume = 0.5; // Kembalikan volume BGM
+                
+                // Jika user selesai bicara, otomatis langsung tembak ke otak AI!
+                if(document.getElementById('input-curhat').value.trim() !== "") {
+                    kirimCurhatTeks();
+                }
+            };
+        }
+
+        function pendetaDengarCurhat() {
+            if (!recognition) {
+                alert("Browser kamu tidak mendukung pengenal suara, Min. Silakan ketik langsung ya!");
+                return;
+            }
+            recognition.start();
+        }
+
+        // 🧠 ENGINE OTAK AI & KONSULTASI HYBRID (FREE GEMINI API INTEGRATION)
+        function kirimCurhatTeks() {
+            let keluhanUser = document.getElementById('input-curhat').value.trim();
+            if(!keluhanUser) return;
+
+            document.getElementById('sub-tsi').innerText = "📜 Pendeta sedang merenungkan jalan keluar untukmu...";
+            document.getElementById('sub-kjv').innerText = "Please wait, counseling session in progress...";
+            document.getElementById('sub-orig').innerText = "— MENYELARASKAN AYAT MANIFEST —";
+
+            // 💡 STRATEGI RAG: Paksa AI membaca manifest internal kamu sebelum menjawab
+            // Kita ambil cuplikan ringkas isi manifest yang sedang aktif di layar
+            let sceneAktif = dataManifest[currentSceneIndex];
+            let konteksAyatLokal = JSON.stringify(sceneAktif ? sceneAktif.scripture_data.slice(0, 5) : []);
+
+            // 🔑 KUNCI AKUN API GEMINI GRATISAN (Ganti teks di bawah dengan API Key kamu dari Google AI Studio)
+            const GEMINI_API_KEY = "AIzaSyBcdaf7kwMsk6dJvatEhReYUzL1cVHP488";
+            const url_endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+            let promptSakti = {
+                contents: [{
+                    parts: [{
+                        text: `Anda adalah Pendeta Konselor Spiritual yang bijaksana dari eksplorasi.online. 
+                        Seorang jemaat sedang berkeluh kesah atau bertanya: "${keluhanUser}". 
+                        Berikan konseling pastoral yang penuh empati, singkat (maksimal 3 kalimat), menenangkan, dan WAJIB selaraskan jawabanmu dengan dasar teologis dari data ayat Alkitab berikut: ${konteksAyatLokal}. 
+                        Balaslah menggunakan bahasa yang SAMA dengan bahasa yang digunakan jemaat saat curhat!`
+                    }]
+                }]
+            };
+
+            fetch(url_endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(promptSakti)
+            })
+            .then(res => res.json())
+            .then(result => {
+                let jawabanPendetaAI = result.candidates[0].content.parts[0].text;
+                
+                // Tampilkan Jawaban di Layar Takarir
+                document.getElementById('sub-tsi').innerText = jawabanPendetaAI;
+                document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
+                document.getElementById('sub-orig').innerText = "🎙️ PENDETA DIGITAL SEDANG BERBICARA";
+                document.getElementById('input-curhat').value = ""; // Bersihkan kolom
+
+                // 🎶 ENGINE MULUT AI (TTS NATIVE): Mengucapkan Jawaban dalam Bahasa Pengguna
+                window.speechSynthesis.cancel();
+                let ucapanSuara = new SpeechSynthesisUtterance(jawabanPendetaAI);
+                
+                // Deteksi otomatis bahasa: Jika teks mengandung kata bahasa inggris, gunakan logat inggris, dst.
+                ucapanSuara.lang = 'id-ID'; // Default bahasa Indonesia, bisa di-switch on-the-fly
+                ucapanSuara.rate = 0.88; // Tempo berwibawa
+                ucapanSuara.pitch = 0.9;  // Suara berat kebapakan
+                
+                window.speechSynthesis.speak(ucapanSuara);
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('sub-tsi').innerText = "Koneksi batin terputus, periksa setelan API Key Gemini kamu, Min.";
+            });
+        }    
+
     </script>
 </body>
 </html>
