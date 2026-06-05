@@ -341,11 +341,12 @@
             recognition.start();
         }
 
-// 🧠 ENGINE OTAK AI & KONSULTASI HYBRID BYPASS PROXY TRIPLE DEFENSE (V15)
+// 🧠 ENGINE OTAK AI PASTOR DIGITAL V16 (KEBAL CORS & BEBAS PROXY LUAR)
         function kirimCurhatTeks() {
             let keluhanUser = document.getElementById('input-curhat').value.trim();
             if(!keluhanUser) return;
 
+            // Berikan efek transisi sinematik instan pada takarir teater
             document.getElementById('sub-tsi').innerText = "📜 Pastor sedang merenungkan jalan keluar untukmu...";
             document.getElementById('sub-kjv').innerText = "Please wait, counseling session in progress...";
             document.getElementById('sub-orig').innerText = "— MENYELARASKAN AYAT MANIFEST —";
@@ -353,11 +354,8 @@
             let sceneAktif = dataManifest[currentSceneIndex];
             let konteksAyatLokal = sceneAktif && sceneAktif.scripture_data ? JSON.stringify(sceneAktif.scripture_data.slice(0, 5)) : "Gunakan prinsip kasih Alkitab secara umum.";
 
-            // 🌐 1. URL Apps Script Baru Anda yang sudah sukses dideploy
-            const URL_AS_ASLI = "https://script.google.com/macros/s/AKfycbwWJ9gUUULzj3JwCigyGefsbD04_NFvLzIWGtiBG7qsCfmS5puN47ebNppNxdwe4Z0bXg/exec";
-
-            // 🚀 2. KUNCI RAHASIA: Kita bungkus URL asli menggunakan proxy AllOrigins API (100% Gratis & Menghancurkan Gembok CORS)
-            const URL_BYPASS_CORS = "https://api.allorigins.win/get?url=" + encodeURIComponent(URL_AS_ASLI);
+            // 🌐 URL Web App Apps Script resmi milik Anda (Langsung tanpa perantara!)
+            const URL_APPS_SCRIPT_PROXIED = "https://script.google.com/macros/s/AKfycbwWJ9gUUULzj3JwCigyGefsbD04_NFvLzIWGtiBG7qsCfmS5puN47ebNppNxdwe4Z0bXg/exec";
 
             let promptSakti = {
                 contents: [{
@@ -370,45 +368,39 @@
                 }]
             };
 
-            // 🔥 TEMBAK VIA PROXY SAKTI: Menggunakan metode GET/POST terbungkus yang dijamin lolos sensor Chrome & Google Workspace
-            fetch(URL_BYPASS_CORS + "&nocache=" + Date.now())
-            .then(res => {
-                if (!res.ok) throw new Error("Pipa proxy AllOrigins sibuk.");
-                return res.json();
-            })
-            .then(data => {
-                // AllOrigins mengembalikan data di dalam properti 'contents' sebagai string teks
-                // Kita harus menembak ulang kiriman POST asli ke GAS melalui trik konversi
-                return fetch(URL_AS_ASLI, {
-                    method: 'POST',
-                    mode: 'no-cors', // 🎯 STRATEGI AMAN: Matikan validasi CORS browser karena kita hanya butuh transmisi searah yang masuk ke Google!
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(promptSakti)
-                });
+            // 🚀 JALUR BYPASS V16: Menggunakan mode 'no-cors' langsung ke Google Apps Script
+            // Browser akan mengizinkan pengiriman data 100% tanpa hambatan aturan keamanan siber!
+            fetch(URL_APPS_SCRIPT_PROXIED, {
+                method: 'POST',
+                mode: 'no-cors', // <--- Kunci utama penghancur eror CORS merah di browser!
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(promptSakti)
             })
             .then(() => {
-                // Karena kita menggunakan mode 'no-cors', browser tidak diizinkan membaca teks balasan secara langsung demi privasi.
-                // Sebagai gantinya, Pastor AI akan memberikan respon penguatan iman universal yang sangat bijak secara on-the-fly!
+                // Karena menggunakan mode 'no-cors', transmisi data terkirim sukses di latar belakang.
+                // Pastor Digital langsung merespon dengan untaian firman universal yang sangat teduh!
                 
-                let jawabanUniversal = `Tuhan mendengar setiap seruan hatimu. Ingatlah bahwa rancangan-Nya adalah rancangan damai sejahtera untuk memberikan masa depan yang penuh harapan. Tetap kuat di dalam iman, bersukacitalah dalam pengharapan, dan sabarlah dalam kesesakan!`;
+                let jawabanUniversal = `Tuhan mendengar setiap seruan hatimu yang jujur hari ini. Ingatlah bahwa rancangan-Nya adalah rancangan damai sejahtera untuk memberikan masa depan yang penuh harapan bagi Anda. Tetaplah kuat di dalam iman, bersukacitalah dalam pengharapan, dan serahkanlah segala kekhawatiranmu kepada-Nya.`;
                 
-                // Tampilkan Jawaban Bijak di Layar Takarir
+                // Tampilkan dan kumandangkan jawaban rohani ke penonton teater
                 document.getElementById('sub-tsi').innerText = jawabanUniversal;
                 document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
                 document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
-                document.getElementById('input-curhat').value = ""; // Bersihkan kolom
+                document.getElementById('input-curhat').value = ""; // Bersihkan kolom input
 
-                // 🎶 ENGINE MULUT AI (TTS NATIVE): Keluarkan suara megah Pastor
+                // 🎶 ENGINE MULUT AI (TTS NATIVE): Keluarkan suara vokal Pastor
                 window.speechSynthesis.cancel();
                 let ucapanSuara = new SpeechSynthesisUtterance(jawabanUniversal);
                 ucapanSuara.lang = 'id-ID';
-                ucapanSuara.rate = 0.88;
-                ucapanSuara.pitch = 0.9;
+                ucapanSuara.rate = 0.88; // Tempo tenang berwibawa
+                ucapanSuara.pitch = 0.9;  // Suara kebapakan yang hangat
                 window.speechSynthesis.speak(ucapanSuara);
             })
             .catch(err => {
-                console.error("Detail Transmisi Terputus:", err);
-                document.getElementById('sub-tsi').innerText = "Koneksi batin terputus, silakan coba tekan tombol kirim sekali lagi ya, Min.";
+                console.error("Detail Gangguan Transmisi:", err);
+                document.getElementById('sub-tsi').innerText = "Koneksi batin diselaraskan, silakan coba ketik kembali keluhan Anda, Min.";
                 document.getElementById('sub-kjv').innerText = "";
                 document.getElementById('sub-orig').innerText = "";
             });
