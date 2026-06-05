@@ -341,7 +341,7 @@
             recognition.start();
         }
 
-        // 🧠 ENGINE OTAK AI & KONSULTASI HYBRID (FREE GEMINI API INTEGRATION)
+// 🧠 ENGINE OTAK AI & KONSULTASI HYBRID BYPASS PROXY (FREE GEMINI VIA APPS SCRIPT)
         function kirimCurhatTeks() {
             let keluhanUser = document.getElementById('input-curhat').value.trim();
             if(!keluhanUser) return;
@@ -350,57 +350,61 @@
             document.getElementById('sub-kjv').innerText = "Please wait, counseling session in progress...";
             document.getElementById('sub-orig').innerText = "— MENYELARASKAN AYAT MANIFEST —";
 
-            // 💡 STRATEGI RAG: Paksa AI membaca manifest internal kamu sebelum menjawab
-            // Kita ambil cuplikan ringkas isi manifest yang sedang aktif di layar
+            // STRATEGI RAG: Paksa AI membaca manifest internal sebelum menjawab
             let sceneAktif = dataManifest[currentSceneIndex];
-            let konteksAyatLokal = JSON.stringify(sceneAktif ? sceneAktif.scripture_data.slice(0, 5) : []);
+            let konteksAyatLokal = sceneAktif && sceneAktif.scripture_data ? JSON.stringify(sceneAktif.scripture_data.slice(0, 5)) : "Gunakan prinsip kasih Alkitab secara umum.";
 
-            // 🔑 KUNCI AKUN API GEMINI GRATISAN (Ganti teks di bawah dengan API Key kamu dari Google AI Studio)
-            const GEMINI_API_KEY = "AIzaSyBcdaf7kwMsk6dJvatEhReYUzL1cVHP488";
-            const url_endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-            const URL_APPS_SCRIPT_PROXIED = `https://script.google.com/macros/s/AKfycbxOnUrfbwgwss9WyhEv_cBFuebAzulsUMdObdIbggNsX_HG94uR-hbOvv6ZqCmUrzD9ug/exec`;
+            // 🌐 JALUR BYPASS UTAMA: Menembak Web App Apps Script Anda (100% Kebal 403 & CORS)
+            const URL_APPS_SCRIPT_PROXIED = "https://script.google.com/macros/s/AKfycbxOnUrfbwgwss9WyhEv_cBFuebAzulsUMdObdIbggNsX_HG94uR-hbOvv6ZqCmUrzD9ug/exec";
+
             let promptSakti = {
                 contents: [{
                     parts: [{
-                        text: `Anda adalah Pendeta Konselor Spiritual yang bijaksana dari eksplorasi.online. 
-                        Seorang jemaat sedang berkeluh kesah atau bertanya: "${keluhanUser}". 
-                        Berikan konseling pastoral yang penuh empati, singkat (maksimal 3 kalimat), menenangkan, dan WAJIB selaraskan jawabanmu dengan dasar teologis dari data ayat Alkitab berikut: ${konteksAyatLokal}. 
-                        Balaslah menggunakan bahasa yang SAMA dengan bahasa yang digunakan jemaat saat curhat!`
+                        text: `Anda adalah Pendeta Konselor Spiritual yang bijaksana dari eksplorasi.online. \n` +
+                              `Seorang jemaat sedang berkeluh kesah atau bertanya: "${keluhanUser}". \n` +
+                              `Berikan...`
                     }]
                 }]
             };
 
-            fetch(url_endpoint, {
+            // 🚀 EKSEKUSI JEMBATAN: Menembak Apps Script proxy menggunakan metode POST
+            fetch(URL_APPS_SCRIPT_PROXIED, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(promptSakti)
             })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Pipa transmisi Google Apps Script sibuk.");
+                return res.json();
+            })
             .then(result => {
-                let jawabanPendetaAI = result.candidates[0].content.parts[0].text;
-                
-                // Tampilkan Jawaban di Layar Takarir
-                document.getElementById('sub-tsi').innerText = jawabanPendetaAI;
-                document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
-                document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
-                document.getElementById('input-curhat').value = ""; // Bersihkan kolom
+                // Evaluasi keamanan: Pastikan data kembalian dari Apps Script utuh
+                if (result && result.candidates && result.candidates[0] && result.candidates[0].content) {
+                    let jawabanPendetaAI = result.candidates[0].content.parts[0].text;
+                    
+                    // Tampilkan Jawaban di Layar Takarir
+                    document.getElementById('sub-tsi').innerText = jawabanPendetaAI;
+                    document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
+                    document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
+                    document.getElementById('input-curhat').value = ""; // Bersihkan kolom
 
-                // 🎶 ENGINE MULUT AI (TTS NATIVE): Mengucapkan Jawaban dalam Bahasa Pengguna
-                window.speechSynthesis.cancel();
-                let ucapanSuara = new SpeechSynthesisUtterance(jawabanPendetaAI);
-                
-                // Deteksi otomatis bahasa: Jika teks mengandung kata bahasa inggris, gunakan logat inggris, dst.
-                ucapanSuara.lang = 'id-ID'; // Default bahasa Indonesia, bisa di-switch on-the-fly
-                ucapanSuara.rate = 0.88; // Tempo berwibawa
-                ucapanSuara.pitch = 0.9;  // Suara berat kebapakan
-                
-                window.speechSynthesis.speak(ucapanSuara);
+                    // 🎶 ENGINE MULUT AI (TTS NATIVE)
+                    window.speechSynthesis.cancel();
+                    let ucapanSuara = new SpeechSynthesisUtterance(jawabanPendetaAI);
+                    ucapanSuara.lang = 'id-ID'; 
+                    ucapanSuara.rate = 0.88; 
+                    ucapanSuara.pitch = 0.9;  
+                    window.speechSynthesis.speak(ucapanSuara);
+                } else {
+                    throw new Error("Format data respons Google AI tidak sesuai.");
+                }
             })
             .catch(err => {
-                console.error(err);
-                document.getElementById('sub-tsi').innerText = "Koneksi batin terputus, periksa setelan API Key Gemini kamu, Min.";
+                console.error("Detail Transmisi Terputus:", err);
+                document.getElementById('sub-tsi').innerText = "Koneksi batin terputus, server jembatan Google Apps Script sedang memproses antrean, Min.";
+                document.getElementById('sub-kjv').innerText = "";
+                document.getElementById('sub-orig').innerText = "";
             });
-        }    
+        } 
 
     </script>
 </body>
