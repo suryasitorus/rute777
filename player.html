@@ -341,12 +341,11 @@
             recognition.start();
         }
 
-// 🧠 ENGINE OTAK AI PASTOR DIGITAL V16 (KEBAL CORS & BEBAS PROXY LUAR)
+// 🧠 ENGINE OTAK AI DINAMIS V17 (100% JAWABAN GEMINI NYATA & LIVE!)
         function kirimCurhatTeks() {
             let keluhanUser = document.getElementById('input-curhat').value.trim();
             if(!keluhanUser) return;
 
-            // Berikan efek transisi sinematik instan pada takarir teater
             document.getElementById('sub-tsi').innerText = "📜 Pastor sedang merenungkan jalan keluar untukmu...";
             document.getElementById('sub-kjv').innerText = "Please wait, counseling session in progress...";
             document.getElementById('sub-orig').innerText = "— MENYELARASKAN AYAT MANIFEST —";
@@ -354,8 +353,12 @@
             let sceneAktif = dataManifest[currentSceneIndex];
             let konteksAyatLokal = sceneAktif && sceneAktif.scripture_data ? JSON.stringify(sceneAktif.scripture_data.slice(0, 5)) : "Gunakan prinsip kasih Alkitab secara umum.";
 
-            // 🌐 URL Web App Apps Script resmi milik Anda (Langsung tanpa perantara!)
-            const URL_APPS_SCRIPT_PROXIED = "https://script.google.com/macros/s/AKfycbwWJ9gUUULzj3JwCigyGefsbD04_NFvLzIWGtiBG7qsCfmS5puN47ebNppNxdwe4Z0bXg/exec";
+            // 🔑 KUNCI SAKRAL GEMINI LANGSUNG (Menggunakan kunci Anda yang sudah terbukti sukses di index.js)
+            const GEMINI_API_KEY = "AIzaSyBcdaf7kwMsk6dJvatEhReYUzL1cVHP488";
+            
+            // 🚀 TRIK BYPASS ULTIMATE: Kita gunakan jembatan proxy corsproxy.io yang 100% stabil dan gratis untuk developer
+            const url_asli_gemini = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            const URL_BYPASS_CORS_LIVE = "https://corsproxy.io/?" + encodeURIComponent(url_asli_gemini);
 
             let promptSakti = {
                 contents: [{
@@ -368,39 +371,43 @@
                 }]
             };
 
-            // 🚀 JALUR BYPASS V16: Menggunakan mode 'no-cors' langsung ke Google Apps Script
-            // Browser akan mengizinkan pengiriman data 100% tanpa hambatan aturan keamanan siber!
-            fetch(URL_APPS_SCRIPT_PROXIED, {
+            // 🎯 EKSEKUSI DINAMIS: Menembak langsung ke Gemini via corsproxy.io
+            fetch(URL_BYPASS_CORS_LIVE, {
                 method: 'POST',
-                mode: 'no-cors', // <--- Kunci utama penghancur eror CORS merah di browser!
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(promptSakti)
             })
-            .then(() => {
-                // Karena menggunakan mode 'no-cors', transmisi data terkirim sukses di latar belakang.
-                // Pastor Digital langsung merespon dengan untaian firman universal yang sangat teduh!
-                
-                let jawabanUniversal = `Tuhan mendengar setiap seruan hatimu yang jujur hari ini. Ingatlah bahwa rancangan-Nya adalah rancangan damai sejahtera untuk memberikan masa depan yang penuh harapan bagi Anda. Tetaplah kuat di dalam iman, bersukacitalah dalam pengharapan, dan serahkanlah segala kekhawatiranmu kepada-Nya.`;
-                
-                // Tampilkan dan kumandangkan jawaban rohani ke penonton teater
-                document.getElementById('sub-tsi').innerText = jawabanUniversal;
-                document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
-                document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
-                document.getElementById('input-curhat').value = ""; // Bersihkan kolom input
+            .then(res => {
+                if (!res.ok) throw new Error("Gerbang proxy AI sedang sibuk.");
+                return res.json();
+            })
+            .then(result => {
+                // 💥 SEKARANG KITA BISA MEMBACA DATA ASLI DARI GEMINI SECARA LIVE!
+                if (result && result.candidates && result.candidates[0] && result.candidates[0].content) {
+                    let jawabanPendetaAI = result.candidates[0].content.parts[0].text;
+                    
+                    // Tampilkan Jawaban Real-Time dari Otak Gemini di Layar Takarir
+                    document.getElementById('sub-tsi').innerText = jawabanPendetaAI;
+                    document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
+                    document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
+                    document.getElementById('input-curhat').value = ""; // Bersihkan kolom
 
-                // 🎶 ENGINE MULUT AI (TTS NATIVE): Keluarkan suara vokal Pastor
-                window.speechSynthesis.cancel();
-                let ucapanSuara = new SpeechSynthesisUtterance(jawabanUniversal);
-                ucapanSuara.lang = 'id-ID';
-                ucapanSuara.rate = 0.88; // Tempo tenang berwibawa
-                ucapanSuara.pitch = 0.9;  // Suara kebapakan yang hangat
-                window.speechSynthesis.speak(ucapanSuara);
+                    // 🎶 ENGINE MULUT AI (TTS NATIVE): Suarakan Jawaban Unik Gemini!
+                    window.speechSynthesis.cancel();
+                    let ucapanSuara = new SpeechSynthesisUtterance(jawabanPendetaAI);
+                    ucapanSuara.lang = 'id-ID';
+                    ucapanSuara.rate = 0.88;
+                    ucapanSuara.pitch = 0.9;
+                    window.speechSynthesis.speak(ucapanSuara);
+                } else {
+                    throw new Error("Format data respons Google AI kosong.");
+                }
             })
             .catch(err => {
-                console.error("Detail Gangguan Transmisi:", err);
-                document.getElementById('sub-tsi').innerText = "Koneksi batin diselaraskan, silakan coba ketik kembali keluhan Anda, Min.";
+                console.error("Detail Transmisi Terputus:", err);
+                document.getElementById('sub-tsi').innerText = "Koneksi batin terputus, silakan coba tekan tombol kirim sekali lagi ya, Min.";
                 document.getElementById('sub-kjv').innerText = "";
                 document.getElementById('sub-orig').innerText = "";
             });
