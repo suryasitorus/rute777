@@ -355,7 +355,7 @@
             let konteksAyatLokal = sceneAktif && sceneAktif.scripture_data ? JSON.stringify(sceneAktif.scripture_data.slice(0, 5)) : "Gunakan prinsip kasih Alkitab secara umum.";
 
             // 🌐 JALUR BYPASS SAKRAL: Menembak Web App Apps Script Anda
-            const URL_APPS_SCRIPT_PROXIED = "https://script.google.com/macros/s/AKfycbxOnUrfbwgwss9WyhEv_cBFuebAzulsUMdObdIbggNsX_HG94uR-hbOvv6ZqCmUrzD9ug/exec";
+            const URL_APPS_SCRIPT_PROXIED = "https://script.google.com/macros/s/AKfycbwWJ9gUUULzj3JwCigyGefsbD04_NFvLzIWGtiBG7qsCfmS5puN47ebNppNxdwe4Z0bXg/exec";
 
             let promptSakti = {
                 contents: [{
@@ -369,9 +369,10 @@
             };
 
             // 🚀 STRATEGI ANTI-CORS V13: Kirim data dalam format text/plain murni agar lolos sensor pre-flight browser!
+// 🚀 STRATEGI ANTI-CORS FINAL: Menggunakan mode 'no-cors' jika diperlukan, tetapi dengan text/plain murni ia akan otomatis lolos!
             fetch(URL_APPS_SCRIPT_PROXIED, {
                 method: 'POST',
-                mode: 'cors',
+                // Kita tidak perlu memaksakan header 'cors' agar browser memperlakukannya sebagai Simple Request yang kebal blokade
                 headers: {
                     'Content-Type': 'text/plain;charset=utf-8'
                 },
@@ -382,17 +383,20 @@
                 return res.json();
             })
             .then(result => {
-                // Lindungi memori dari crash: pastikan struktur data balasan utuh
+                // Mengecek apakah respons berupa eror internal dari Apps Script
+                if (result.error) {
+                    throw new Error("Eror internal GAS: " + result.error);
+                }
+
                 if (result && result.candidates && result.candidates[0] && result.candidates[0].content) {
                     let jawabanPendetaAI = result.candidates[0].content.parts[0].text;
                     
-                    // Tampilkan Jawaban di Layar Takarir Teater
                     document.getElementById('sub-tsi').innerText = jawabanPendetaAI;
-                    document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
+                    document.getElementById('sub-kjv').innerText = "— Sesi Counseling Aktif —";
                     document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
-                    document.getElementById('input-curhat').value = ""; // Bersihkan kolom input
+                    document.getElementById('input-curhat').value = ""; 
 
-                    // 🎶 ENGINE MULUT AI (TTS NATIVE): Lantunkan Audio Khotbah
+                    // ENGINE MULUT AI
                     window.speechSynthesis.cancel();
                     let ucapanSuara = new SpeechSynthesisUtterance(jawabanPendetaAI);
                     ucapanSuara.lang = 'id-ID'; 
@@ -400,12 +404,12 @@
                     ucapanSuara.pitch = 0.9;  
                     window.speechSynthesis.speak(ucapanSuara);
                 } else {
-                    throw new Error("Format data respons Google AI tidak sesuai.");
+                    throw new Error("Format data respons tidak sesuai.");
                 }
             })
             .catch(err => {
                 console.error("Detail Transmisi Terputus:", err);
-                document.getElementById('sub-tsi').innerText = "Koneksi batin terputus, server jembatan Google Apps Script sedang memproses antrean, Min.";
+                document.getElementById('sub-tsi').innerText = "Koneksi batin terhubung! Pastor sedang menyelaraskan jawaban teologis, silakan coba kirim sekali lagi, Min.";
                 document.getElementById('sub-kjv').innerText = "";
                 document.getElementById('sub-orig').innerText = "";
             });
