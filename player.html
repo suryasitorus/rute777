@@ -341,7 +341,7 @@
             recognition.start();
         }
 
-// 🧠 ENGINE OTAK AI DINAMIS V17 (100% JAWABAN GEMINI NYATA & LIVE!)
+// 🧠 ENGINE OTAK AI PASTOR DIGITAL DINAMIS V18 (100% JAWABAN REAL GEMINI - ANTI CORS)
         function kirimCurhatTeks() {
             let keluhanUser = document.getElementById('input-curhat').value.trim();
             if(!keluhanUser) return;
@@ -351,63 +351,47 @@
             document.getElementById('sub-orig').innerText = "— MENYELARASKAN AYAT MANIFEST —";
 
             let sceneAktif = dataManifest[currentSceneIndex];
-            let konteksAyatLokal = sceneAktif && sceneAktif.scripture_data ? JSON.stringify(sceneAktif.scripture_data.slice(0, 5)) : "Gunakan prinsip kasih Alkitab secara umum.";
+            let konteksAyatLokal = sceneAktif && sceneAktif.scripture_data ? JSON.stringify(sceneAktif.scripture_data.slice(0, 3)) : "Umum";
 
-            // 🔑 KUNCI SAKRAL GEMINI LANGSUNG (Menggunakan kunci Anda yang sudah terbukti sukses di index.js)
-            const GEMINI_API_KEY = "AIzaSyBcdaf7kwMsk6dJvatEhReYUzL1cVHP488";
-            
-            // 🚀 TRIK BYPASS ULTIMATE: Kita gunakan jembatan proxy corsproxy.io yang 100% stabil dan gratis untuk developer
-            const url_asli_gemini = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-            const URL_BYPASS_CORS_LIVE = "https://corsproxy.io/?" + encodeURIComponent(url_asli_gemini);
+            // 🌐 JALUR PARALEL KUDUS: Masukkan URL Web App Apps Script Baru Hasil Langkah 1 Anda!
+            const URL_APPS_SCRIPT_GET = "https://script.google.com/macros/s/AKfycbwWJ9gUUULzj3JwCigyGefsbD04_NFvLzIWGtiBG7qsCfmS5puN47ebNppNxdwe4Z0bXg/exec";
 
-            let promptSakti = {
-                contents: [{
-                    parts: [{
-                        text: `Anda adalah Pendeta Konselor Spiritual yang bijaksana dari eksplorasi.online. \n` +
-                              `Seorang jemaat sedang berkeluh kesah atau bertanya: "${keluhanUser}". \n` +
-                              `Berikan konseling pastoral yang penuh empati, singkat (maksimal 3 kalimat), menenangkan, dan WAJIB selaraskan jawabanmu dengan dasar teologis dari data ayat Alkitab berikut: ${konteksAyatLokal}. \n` +
-                              `Balaslah menggunakan bahasa yang SAMA dengan bahasa yang digunakan jemaat saat curhat!`
-                    }]
-                }]
-            };
+            // Bungkus data curhat ke dalam parameter URL agar lolos dari jerat sensor preflight browser
+            let url_final_tembakan = `${URL_APPS_SCRIPT_GET}?curhat=${encodeURIComponent(keluhanUser)}&manifest=${encodeURIComponent(konteksAyatLokal)}`;
 
-            // 🎯 EKSEKUSI DINAMIS: Menembak langsung ke Gemini via corsproxy.io
-            fetch(URL_BYPASS_CORS_LIVE, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(promptSakti)
-            })
+            // 🎯 EKSEKUSI: Menembak menggunakan metode GET biasa yang dijamin kebal blokade siber!
+            fetch(url_final_tembakan)
             .then(res => {
-                if (!res.ok) throw new Error("Gerbang proxy AI sedang sibuk.");
+                if (!res.ok) throw new Error("Server jembatan Google sibuk.");
                 return res.json();
             })
             .then(result => {
-                // 💥 SEKARANG KITA BISA MEMBACA DATA ASLI DARI GEMINI SECARA LIVE!
+                // Bongkar hasil jawaban dinamis yang dilahirkan oleh Gemini API
                 if (result && result.candidates && result.candidates[0] && result.candidates[0].content) {
                     let jawabanPendetaAI = result.candidates[0].content.parts[0].text;
                     
-                    // Tampilkan Jawaban Real-Time dari Otak Gemini di Layar Takarir
+                    // Semprotkan jawaban unik Gemini ke takarir layar bioskop Anda!
                     document.getElementById('sub-tsi').innerText = jawabanPendetaAI;
                     document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
                     document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
                     document.getElementById('input-curhat').value = ""; // Bersihkan kolom
 
-                    // 🎶 ENGINE MULUT AI (TTS NATIVE): Suarakan Jawaban Unik Gemini!
+                    // 🎶 ENGINE MULUT AI (TTS NATIVE): Mengucapkan jawaban unik dinamis
                     window.speechSynthesis.cancel();
                     let ucapanSuara = new SpeechSynthesisUtterance(jawabanPendetaAI);
                     ucapanSuara.lang = 'id-ID';
                     ucapanSuara.rate = 0.88;
                     ucapanSuara.pitch = 0.9;
                     window.speechSynthesis.speak(ucapanSuara);
+                } else if (result.error) {
+                    throw new Error(result.error);
                 } else {
-                    throw new Error("Format data respons Google AI kosong.");
+                    throw new Error("Struktur respons kosong.");
                 }
             })
             .catch(err => {
                 console.error("Detail Transmisi Terputus:", err);
-                document.getElementById('sub-tsi').innerText = "Koneksi batin terputus, silakan coba tekan tombol kirim sekali lagi ya, Min.";
+                document.getElementById('sub-tsi').innerText = "Koneksi batin diselaraskan, silakan tekan kembali tombol Kirim atau gunakan Suara ya, Min.";
                 document.getElementById('sub-kjv').innerText = "";
                 document.getElementById('sub-orig').innerText = "";
             });
