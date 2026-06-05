@@ -354,7 +354,7 @@
             let konteksAyatLokal = sceneAktif && sceneAktif.scripture_data ? JSON.stringify(sceneAktif.scripture_data.slice(0, 3)) : "Umum";
 
             // 🌐 JALUR PARALEL KUDUS: Masukkan URL Web App Apps Script Baru Hasil Langkah 1 Anda!
-            const URL_APPS_SCRIPT_GET = "https://script.google.com/macros/s/AKfycbwWJ9gUUULzj3JwCigyGefsbD04_NFvLzIWGtiBG7qsCfmS5puN47ebNppNxdwe4Z0bXg/exec";
+            const URL_APPS_SCRIPT_GET = "https://script.google.com/macros/s/AKfycbwzRWEoF3nEP8Zi2L1Xzma_ZFI1mjWCLJlg4ZxHD-D6EkawnG2ytgbr9NqCSplIuGH5Aw/exec";
 
             // Bungkus data curhat ke dalam parameter URL agar lolos dari jerat sensor preflight browser
             let url_final_tembakan = `${URL_APPS_SCRIPT_GET}?curhat=${encodeURIComponent(keluhanUser)}&manifest=${encodeURIComponent(konteksAyatLokal)}`;
