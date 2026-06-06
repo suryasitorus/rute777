@@ -353,30 +353,26 @@
             let sceneAktif = dataManifest[currentSceneIndex];
             let konteksAyatLokal = sceneAktif && sceneAktif.scripture_data ? JSON.stringify(sceneAktif.scripture_data.slice(0, 3)) : "Umum";
 
-            // 🌐 JALUR PARALEL KUDUS: Masukkan URL Web App Apps Script Baru Hasil Langkah 1 Anda!
-            const URL_APPS_SCRIPT_GET = "https://script.google.com/macros/s/AKfycbxBDUg-H5BpnwkXm9zt4qC0qNh_6gJyjPDsGfzM1o2welIyjNzrlxAC6Vbk8O0IEmnjCA/exec";
+            // 🌐 AMAN TOTAL: Di sini kita HANYA menaruh URL jembatan Apps Script Baru dari Langkah 2!
+            // Tidak ada string "AIzaSy..." sama sekali di file ini! Robot GitHub dijamin aman dan tersenyum.
+            const URL_APPS_SCRIPT_GET = "https://script.google.com/macros/s/AKfycbxGztVczkg00N3b-IYE-rnXSWlttxmsp1CIpVVCXOt0lF5BUWmtdj1PJPmP9b4zscn8cQ/exec";
 
-            // Bungkus data curhat ke dalam parameter URL agar lolos dari jerat sensor preflight browser
             let url_final_tembakan = `${URL_APPS_SCRIPT_GET}?curhat=${encodeURIComponent(keluhanUser)}&manifest=${encodeURIComponent(konteksAyatLokal)}`;
 
-            // 🎯 EKSEKUSI: Menembak menggunakan metode GET biasa yang dijamin kebal blokade siber!
             fetch(url_final_tembakan)
             .then(res => {
                 if (!res.ok) throw new Error("Server jembatan Google sibuk.");
                 return res.json();
             })
             .then(result => {
-                // Bongkar hasil jawaban dinamis yang dilahirkan oleh Gemini API
                 if (result && result.candidates && result.candidates[0] && result.candidates[0].content) {
                     let jawabanPendetaAI = result.candidates[0].content.parts[0].text;
                     
-                    // Semprotkan jawaban unik Gemini ke takarir layar bioskop Anda!
                     document.getElementById('sub-tsi').innerText = jawabanPendetaAI;
                     document.getElementById('sub-kjv').innerText = "— Sesi Konseling Suara Aktif —";
                     document.getElementById('sub-orig').innerText = "🎙️ PASTOR DIGITAL SEDANG BERBICARA";
-                    document.getElementById('input-curhat').value = ""; // Bersihkan kolom
+                    document.getElementById('input-curhat').value = ""; 
 
-                    // 🎶 ENGINE MULUT AI (TTS NATIVE): Mengucapkan jawaban unik dinamis
                     window.speechSynthesis.cancel();
                     let ucapanSuara = new SpeechSynthesisUtterance(jawabanPendetaAI);
                     ucapanSuara.lang = 'id-ID';
@@ -391,7 +387,7 @@
             })
             .catch(err => {
                 console.error("Detail Transmisi Terputus:", err);
-                document.getElementById('sub-tsi').innerText = "Koneksi batin diselaraskan, silakan tekan kembali tombol Kirim atau gunakan Suara ya, Min.";
+                document.getElementById('sub-tsi').innerText = "Koneksi batin diselaraskan, silakan tekan kembali tombol Kirim atau gunakan Suara ya, Kapten.";
                 document.getElementById('sub-kjv').innerText = "";
                 document.getElementById('sub-orig').innerText = "";
             });
